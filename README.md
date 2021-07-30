@@ -17,7 +17,7 @@ dependencies:
   logly: ^0.1.0
 ```
 
-# Usage
+## Usage
 
 The only thing that needs to be done to use it, is to import the library
 (`import 'package:logly/logly.dart';`) and call the `log` function:
@@ -37,3 +37,10 @@ The output from that would look like:
 ![Output Example](/images/example.png)
 
 The link can be clicked to be taken to the source of the log entry.
+
+## Known Issues
+
+* Android Studio does not support ANSI output in the Flutter run
+  console. A workaround is to use `flutter logs` from a terminal within
+  Android Studio instead. `log.clear()` may be called to clear that
+  terminal as necessary.
