@@ -34,26 +34,26 @@ class LogLevel extends Level {
   static const LogLevel SHOUT = LogLevel('SHOUT', 1200);
 
   static const Map<int, String> ICONS = {
-    0:    "🏳", // ALL
-    300:  "🏳", // FINEST
-    400:  "🏳", // FINER
-    500:  "🏳", // FINE
-    700:  "🏳", // CONFIG
-    800:  " ❕", // INFO
-    900:  " ⚠", // WARNING
+    0: "🏳", // ALL
+    300: "🏳", // FINEST
+    400: "🏳", // FINER
+    500: "🏳", // FINE
+    700: "🏳", // CONFIG
+    800: " ❕", // INFO
+    900: " ⚠", // WARNING
     1000: " ⛔", // SEVERE
     1200: " ☢", // SHOUT
     2000: "🏳", // OFF
   };
 
   static const Map<int, String> COLORS = {
-    0:    "\x1B[1m\x1B[38;5;30m", // ALL
-    300:  "\x1B[1m\x1B[38;5;135m", // FINEST
-    400:  "\x1B[1m\x1B[38;5;134m", // FINER
-    500:  "\x1B[1m\x1B[38;5;133m", // FINE
-    700:  "\x1B[1m\x1B[38;5;105m", // CONFIG
-    800:  '\x1B[1m\x1B[38;5;4m', // INFO
-    900:  "\x1B[1m\x1B[38;5;220m", // WARNING
+    0: "\x1B[1m\x1B[38;5;30m", // ALL
+    300: "\x1B[1m\x1B[38;5;135m", // FINEST
+    400: "\x1B[1m\x1B[38;5;134m", // FINER
+    500: "\x1B[1m\x1B[38;5;133m", // FINE
+    700: "\x1B[1m\x1B[38;5;105m", // CONFIG
+    800: '\x1B[1m\x1B[38;5;4m', // INFO
+    900: "\x1B[1m\x1B[38;5;220m", // WARNING
     1000: "\x1B[1m\x1B[38;5;1m", // SEVERE
     1200: "\x1B[1m\x1B[38;5;0m\x1B[48;5;1m", // SHOUT
     2000: "\x1B[1m\x1B[38;5;233m", // OFF

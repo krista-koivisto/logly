@@ -15,7 +15,7 @@ the library:
 
 ```yaml
 dependencies:
-  logly: ^0.3.1
+  logly: ^0.3.1+format
 ```
 
 ## Usage
@@ -42,7 +42,7 @@ log.info("This is the common info-level log entry.");
 
 The output from that would look like:
 
-![Output Example](/images/example.png)
+![Output Example](https://raw.githubusercontent.com/krista-koivisto/logly/main/images/example.png)
 
 The link can be clicked to be taken to the source of the log entry.
 

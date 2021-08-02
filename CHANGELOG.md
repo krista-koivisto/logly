@@ -1,4 +1,10 @@
+## 0.3.1+format
+
+ * Fix image source on pub.dev.
+ * Fix the formatting of `log_level.dart` to follow `dartfmt` standards.
+
 ## 0.3.1
+
  * Fix spaces at the end of short lines with `clearClutter` enabled.
 
 ## 0.3.0
