@@ -3,8 +3,6 @@
 import 'package:logging/logging.dart';
 
 class LogLevel extends Level {
-  const LogLevel(String name, int value) : super(name, value);
-
   /// Special key to turn on logging for all levels ([value] = 0).
   static const LogLevel ALL = LogLevel('ALL', 0);
 
@@ -61,8 +59,6 @@ class LogLevel extends Level {
     2000: "\x1B[1m\x1B[38;5;233m", // OFF
   };
 
-  String get color => COLORS[value]!;
-
   static const List<LogLevel> LEVELS = [
     ALL,
     FINEST,
@@ -75,4 +71,8 @@ class LogLevel extends Level {
     SHOUT,
     OFF
   ];
+
+  const LogLevel(String name, int value) : super(name, value);
+
+  String get color => COLORS[value]!;
 }

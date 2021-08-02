@@ -1,3 +1,14 @@
+## 0.3.0
+
+ * Add `addTimestamp` and `addLink` options.
+ * Rename `useIcon` to `addIcon`.
+ * Add `imitatePrint` option that sets `addTimestamp`, `addLink`,
+   `addIcon` to false. `useAnsi` and `clearClutter` will remain as they
+   were.
+ * Make links point to the actual log command location within the
+   source file.
+ * Add support for `clearClutter` with multiline strings.
+
 ## 0.2.0
 
  * Make logly a pure Dart library by dropping dependency on Flutter.

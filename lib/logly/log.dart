@@ -25,7 +25,9 @@ const log = _Log();
 
 bool _isInitialized = false;
 bool _useAnsi = true;
-bool _useIcon = true;
+bool _addIcon = true;
+bool _addLink = true;
+bool _addTimestamp = true;
 bool _clearClutter = true;
 bool _levelWasChanged = false;
 LogLevel __level = LogLevel.ALL;
@@ -74,8 +76,33 @@ class _Log {
   /// Whether or not to show emoji-based icon in the output.
   ///
   /// Defaults to true.
-  bool get useIcon => _useIcon;
-  set useIcon(bool useIcon) => _useIcon = useIcon;
+  bool get addIcon => _addIcon;
+  set addIcon(bool addIcon) => _addIcon = addIcon;
+
+  /// Whether or not to show a clickable link to the source in the output.
+  ///
+  /// Defaults to true.
+  bool get addLink => _addLink;
+  set addLink(bool addLink) => _addLink = addLink;
+
+  /// Whether or not to show a timestamp for the event in the output.
+  ///
+  /// Defaults to true.
+  bool get addTimestamp => _addTimestamp;
+  set addTimestamp(bool addTimestamp) => _addTimestamp = addTimestamp;
+
+  /// Imitate Dart's `print` command.
+  ///
+  /// Disables all Logly-added output by setting `addIcon`, `addLink` and
+  /// `addTimestamp` to false.
+  ///
+  /// ANSI-related features such as `useAnsi` and `clearClutter` will still
+  /// remain as they were.
+  void imitatePrint() {
+    addIcon = false;
+    addLink = false;
+    addTimestamp = false;
+  }
 
   /// Whether or not to clear Flutter's prefix to the log when printing.
   ///
@@ -179,28 +206,57 @@ class _Log {
 
   static String _getTime(LogRecord record) {
     final time = record.time;
-    return "${time.hour.toString().padLeft(2,'0')}:"
-        "${time.minute.toString().padLeft(2,'0')}:"
-        "${time.second.toString().padLeft(2,'0')}:"
-        "${time.millisecond.toString().padLeft(3,'0')}";
+    return "${time.hour.toString().padLeft(2, '0')}:"
+        "${time.minute.toString().padLeft(2, '0')}:"
+        "${time.second.toString().padLeft(2, '0')}:"
+        "${time.millisecond.toString().padLeft(3, '0')}";
   }
 
   static String _formatMessage(LogRecord record) {
+    // "I/flutter (  pid): " is 19 characters long.
+    const _clearCode = "\x1B[19D";
+    final clearClutter = _clearClutter && _useAnsi;
     String color = "";
     String icon = "";
     String stackColor = "";
     String endColor = "";
-    String clearClutter = "";
+    String result = "";
     if (_useAnsi) {
       color = LogLevel.COLORS[record.level.value]!;
-      icon = _useIcon ? LogLevel.ICONS[record.level.value]! : "";
+      icon = _addIcon ? LogLevel.ICONS[record.level.value]! : "";
       stackColor = "\x1B[38;5;242m";
       endColor = "\x1B[0m";
-      clearClutter = _clearClutter ? "\x1B[21D" : "";
+      if (clearClutter) {
+        result = _clearCode;
+      }
     }
-    final time = "[$color${_getTime(record)}$endColor]";
-    final _stackTrace = '$stackColor${_parseStackTrace(record)}$endColor';
-    return '$clearClutter$time $icon $_stackTrace: ${record.message}';
+    if (_addTimestamp) {
+      result += "[$color${_getTime(record)}$endColor] ";
+    }
+    if (_addIcon) {
+      result += "$icon ";
+    }
+    if (_addLink) {
+      result += '$stackColor${_parseStackTrace(record)}$endColor';
+    }
+    if ((_addTimestamp && !_addIcon) || _addLink) {
+      result += ": ";
+    }
+    if (clearClutter && record.message.contains('\n')) {
+      int index = 0;
+      result += record.message.split('\n').map((line) {
+        final clearCode = index > 0 ? _clearCode : "";
+        index++;
+        return '$clearCode${line.padRight(19)}';
+      }).join('\n');
+    } else if (clearClutter && (result.length + record.message.length) < 24) {
+      // Ensure there's no leftover clutter at the end if the string isn't long
+      // enough to cover it.
+      result = (result + record.message).padRight(24);
+    } else {
+      result += record.message;
+    }
+    return result;
   }
 
   static void _setDefaultLevel() {
@@ -239,7 +295,7 @@ class _Log {
       final _lines = record.stackTrace.toString().split('\n');
       final match = _vmFrame.firstMatch(_lines[2]);
       if (match != null && match.groupCount == 3) {
-        return match.group(2)!;
+        return "${match.group(2)!}${match.group(3)!}";
       }
     }
     return "<source unknown>";

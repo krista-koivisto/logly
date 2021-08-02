@@ -15,7 +15,7 @@ the library:
 
 ```yaml
 dependencies:
-  logly: ^0.2.0
+  logly: ^0.3.0
 ```
 
 ## Usage
@@ -46,6 +46,14 @@ The output from that would look like:
 
 The link can be clicked to be taken to the source of the log entry.
 
+#### Imitate print
+
+If you just want to use Logly for regular printing, but want to clear
+Flutter's printing clutter, you can set `log.imitatePrint` to true.
+
+If you still want the link to the source to be visible, you can then
+set `log.addLink` to true as well.
+
 ## Known Issues
 
 * Android Studio does not support ANSI output in the Flutter run
@@ -56,3 +64,8 @@ The link can be clicked to be taken to the source of the log entry.
   * It is also possible to disable ANSI output by setting `log.useAnsi`
     to false. This will however disable many main logly features such as
     colors and console and clutter clearing.
+* Any line with less than 19 characters will have spaces at the end when
+  printed when `clearClutter` is set to true. This is because the
+  clutter must be overwritten by an empty character.
+  * This should not be an issue in most cases, but binary output may be
+    invalidated if it contains newlines.
