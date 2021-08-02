@@ -6,10 +6,10 @@ offers a clickable link to the printing line.
 * Clickable links to the source of the log entry.
 * Logging with several severity levels through the `logging` package.
 * ANSI color coding for each severity level.
-* Ability to remove Flutter print clutter ("I/flutter (pid): ").
+* Ability to remove Flutter print clutter (`I/flutter (pid): `).
 * Automatically adjusts severity level threshold:
-  * In `debug` mode sessions everything is printed.
-  * In `profile` mode, everything including warnings and above is
+  * In `debug` mode everything is printed.
+  * In `profile` mode, everything from warnings and above is
     printed.
   * In `release` mode, nothing is printed.
   * This behavior can be overridden by manually setting the level.
@@ -23,7 +23,7 @@ the library:
 
 ```yaml
 dependencies:
-  logly: ^0.3.1+readme2
+  logly: ^0.3.1+readme3
 ```
 
 ## Usage
