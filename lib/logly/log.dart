@@ -212,6 +212,19 @@ class _Log {
         "${time.millisecond.toString().padLeft(3, '0')}";
   }
 
+  /// Ensures there's no leftover clutter at the end if the string isn't long
+  /// enough to cover it.
+  ///
+  /// [length] is the length up to which to cover, filling in empty characters
+  /// if necessary.
+  static String _endLine(String text, [int length = 19]) {
+    if (length - text.length <= 0) {
+      return text;
+    } else {
+      return text.padRight(length) + "\x1B[${length - text.length}D\x1B[0K";
+    }
+  }
+
   static String _formatMessage(LogRecord record) {
     // "I/flutter (  pid): " is 19 characters long.
     const _clearCode = "\x1B[19D";
@@ -247,12 +260,10 @@ class _Log {
       result += record.message.split('\n').map((line) {
         final clearCode = index > 0 ? _clearCode : "";
         index++;
-        return '$clearCode${line.padRight(19)}';
+        return '$clearCode${_endLine(line)}';
       }).join('\n');
     } else if (clearClutter && (result.length + record.message.length) < 24) {
-      // Ensure there's no leftover clutter at the end if the string isn't long
-      // enough to cover it.
-      result = (result + record.message).padRight(24);
+      result = _endLine(result + record.message, 24);
     } else {
       result += record.message;
     }

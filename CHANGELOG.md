@@ -1,3 +1,6 @@
+## 0.3.1
+ * Fix spaces at the end of short lines with `clearClutter` enabled.
+
 ## 0.3.0
 
  * Add `addTimestamp` and `addLink` options.
