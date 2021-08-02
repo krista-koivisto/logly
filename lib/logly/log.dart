@@ -25,6 +25,8 @@ const log = _Log();
 
 bool _isInitialized = false;
 bool _useAnsi = true;
+bool _useIcon = true;
+bool _clearClutter = true;
 bool _levelWasChanged = false;
 LogLevel __level = LogLevel.ALL;
 LogLevel get _level => __level;
@@ -53,8 +55,8 @@ class _Log {
   /// If [message] is a [Function], it will be lazy evaluated. Additionally, if
   /// [message] or its evaluated value is not a [String], then 'toString()' will
   /// be called on the object and the result will be logged.
-  // Override the [call] function so instances of [_Log] can be called as if it
-  // were a function.
+  // Override the [call] function so an instance of [_Log] can be called as if
+  // it were a function.
   void call(Object? message, [LogLevel level = LogLevel.INFO]) {
     _log(message, level);
   }
@@ -64,7 +66,29 @@ class _Log {
   /// Android Studio currently fails to print colors using ANSI. This issue can
   /// be sidestepped by looking at the output of `flutter logs` in the terminal
   /// instead.
+  ///
+  /// Defaults to true.
+  bool get useAnsi => _useAnsi;
   set useAnsi(bool useAnsi) => _useAnsi = useAnsi;
+
+  /// Whether or not to show emoji-based icon in the output.
+  ///
+  /// Defaults to true.
+  bool get useIcon => _useIcon;
+  set useIcon(bool useIcon) => _useIcon = useIcon;
+
+  /// Whether or not to clear Flutter's prefix to the log when printing.
+  ///
+  /// Uses the ANSI cursor back command to step back over the printed output and
+  /// overwrites it.
+  ///
+  /// Android Studio currently fails to print colors using ANSI. This issue can
+  /// be sidestepped by looking at the output of `flutter logs` in the terminal
+  /// instead.
+  ///
+  /// Defaults to true.
+  bool get clearClutter => _clearClutter;
+  set clearClutter(bool clearClutter) => _clearClutter = clearClutter;
 
   /// The level of severity that is considered the minimum for logging.
   LogLevel get level => _level;
@@ -163,12 +187,13 @@ class _Log {
 
   static String _formatMessage(LogRecord record) {
     final color = _useAnsi ? LogLevel.COLORS[record.level.value]! : "";
-    final icon = LogLevel.ICONS[record.level.value]!;
+    final icon = _useIcon ? LogLevel.ICONS[record.level.value]! : "";
     final stackColor = _useAnsi ? "\x1B[38;5;242m" : "";
     final endColor = _useAnsi ? "\x1B[0m" : "";
     final time = "[$color${_getTime(record)}$endColor]";
     final _stackTrace = '$stackColor${_parseStackTrace(record)}$endColor';
-    return '$time $_stackTrace: $icon ${record.message}';
+    final clearClutter = _clearClutter ? "\x1B[21D" : "";
+    return '$clearClutter$time $icon $_stackTrace: ${record.message}';
   }
 
   static void _setDefaultLevel() {

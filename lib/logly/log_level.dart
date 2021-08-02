@@ -41,10 +41,10 @@ class LogLevel extends Level {
     400:  "🏳", // FINER
     500:  "🏳", // FINE
     700:  "🏳", // CONFIG
-    800:  '❕', // INFO
-    900:  "⚠", // WARNING
-    1000: "⛔", // SEVERE
-    1200: "☢", // SHOUT
+    800:  " ❕", // INFO
+    900:  " ⚠", // WARNING
+    1000: " ⛔", // SEVERE
+    1200: " ☢", // SHOUT
     2000: "🏳", // OFF
   };
 

@@ -1,6 +1,6 @@
 name: logly
 description: A simple logging tool that uses color coding to indicate severity and offers a clickable link to the printing line.
-version: 0.1.0
+version: 0.1.1
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
