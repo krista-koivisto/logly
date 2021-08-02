@@ -1,8 +1,8 @@
 // ignore_for_file: avoid_print
 
-import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 
+import 'foundation.dart';
 import 'log_level.dart';
 
 /// Adds a log record for a [message] at a particular [logLevel] if

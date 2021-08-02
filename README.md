@@ -6,6 +6,7 @@ offers a clickable link to the printing line.
 * Logging with several severity levels.
 * Color coding for each severity level.
 * Clickable links to the source of the log entry.
+* Ability to remove Flutter print clutter ("I/flutter (pid): ").
 
 ## Installing
 
@@ -14,7 +15,7 @@ the library:
 
 ```yaml
 dependencies:
-  logly: ^0.1.0
+  logly: ^0.2.0
 ```
 
 ## Usage
@@ -48,6 +49,10 @@ The link can be clicked to be taken to the source of the log entry.
 ## Known Issues
 
 * Android Studio does not support ANSI output in the Flutter run
-  console. A workaround is to use `flutter logs` from a terminal within
-  Android Studio instead. `log.clear()` may be called to clear that
-  terminal as necessary.
+  console.
+  * A workaround is to use `flutter logs` from a terminal within
+    Android Studio instead. `log.clear()` may be called to clear that
+    terminal as necessary.
+  * It is also possible to disable ANSI output by setting `log.useAnsi`
+    to false. This will however disable many main logly features such as
+    colors and console and clutter clearing.

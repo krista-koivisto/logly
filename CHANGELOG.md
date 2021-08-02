@@ -1,3 +1,7 @@
+## 0.2.0
+
+ * Make logly a pure Dart library by dropping dependency on Flutter.
+
 ## 0.1.1+hotfix1
 
  * Fix `useAnsi` ignored by `clearClutter`.
