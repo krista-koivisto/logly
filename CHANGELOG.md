@@ -1,3 +1,7 @@
+## 0.3.1+readme2
+
+ * Improve the readme.
+
 ## 0.3.1+format
 
  * Fix image source on pub.dev.

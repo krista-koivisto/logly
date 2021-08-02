@@ -3,10 +3,18 @@ offers a clickable link to the printing line.
 
 ## Features
 
-* Logging with several severity levels.
-* Color coding for each severity level.
 * Clickable links to the source of the log entry.
+* Logging with several severity levels through the `logging` package.
+* ANSI color coding for each severity level.
 * Ability to remove Flutter print clutter ("I/flutter (pid): ").
+* Automatically adjusts severity level threshold:
+  * In `debug` mode sessions everything is printed.
+  * In `profile` mode, everything including warnings and above is
+    printed.
+  * In `release` mode, nothing is printed.
+  * This behavior can be overridden by manually setting the level.
+* Partially customizable format. You can enable and disable the
+  timestamp, icon and link to suit your needs.
 
 ## Installing
 
@@ -15,7 +23,7 @@ the library:
 
 ```yaml
 dependencies:
-  logly: ^0.3.1+format
+  logly: ^0.3.1+readme2
 ```
 
 ## Usage
