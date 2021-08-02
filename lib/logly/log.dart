@@ -186,13 +186,20 @@ class _Log {
   }
 
   static String _formatMessage(LogRecord record) {
-    final color = _useAnsi ? LogLevel.COLORS[record.level.value]! : "";
-    final icon = _useIcon ? LogLevel.ICONS[record.level.value]! : "";
-    final stackColor = _useAnsi ? "\x1B[38;5;242m" : "";
-    final endColor = _useAnsi ? "\x1B[0m" : "";
+    String color = "";
+    String icon = "";
+    String stackColor = "";
+    String endColor = "";
+    String clearClutter = "";
+    if (_useAnsi) {
+      color = LogLevel.COLORS[record.level.value]!;
+      icon = _useIcon ? LogLevel.ICONS[record.level.value]! : "";
+      stackColor = "\x1B[38;5;242m";
+      endColor = "\x1B[0m";
+      clearClutter = _clearClutter ? "\x1B[21D" : "";
+    }
     final time = "[$color${_getTime(record)}$endColor]";
     final _stackTrace = '$stackColor${_parseStackTrace(record)}$endColor';
-    final clearClutter = _clearClutter ? "\x1B[21D" : "";
     return '$clearClutter$time $icon $_stackTrace: ${record.message}';
   }
 

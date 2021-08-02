@@ -1,3 +1,7 @@
+## 0.1.1+hotfix1
+
+ * Fix `useAnsi` ignored by `clearClutter`.
+
 ## 0.1.1
 
  * Add option to remove Flutter debug clutter. (i.e. "I/flutter (pid):"
